@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Training App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DevOps Training Application</h1>
+    </header>
+    
+    <div class="container">
+        <h2>Welcome to the Simple Node.js App</h2>
+        <p>This application is designed for practicing DevOps workflows with Jenkins and Docker.</p>
+        
+        <h3>Features:</h3>
+        <ul>
+            <li>Simple Express.js server</li>
+            <li>Health check endpoint</li>
+            <li>API endpoints for testing</li>
+            <li>Ready for containerization with Docker</li>
+        </ul>
+        
+        <button id="check-health" class="btn">Check Health Status</button>
+        <button id="get-info" class="btn">Get App Info</button>
+        
+        <div id="status"></div>
+    </div>
+
+    <script>
+        document.getElementById('check-health').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                
+                document.getElementById('status').style.backgroundColor = '#dff0d8';
+                document.getElementById('status').innerHTML = `
+                    <h3>Health Status</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('status').style.backgroundColor = '#f2dede';
+                document.getElementById('status').innerHTML = `
+                    <h3>Error</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+        
+        document.getElementById('get-info').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/info');
+                const data = await response.json();
+                
+                document.getElementById('status').style.backgroundColor = '#d9edf7';
+                document.getElementById('status').innerHTML = `
+                    <h3>App Info</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('status').style.backgroundColor = '#f2dede';
+                document.getElementById('status').innerHTML = `
+                    <h3>Error</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
